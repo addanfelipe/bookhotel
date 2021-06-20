@@ -8,4 +8,7 @@ class Cheapest(views.APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        return Response({})
+        params = request.query_params['input']
+        return Response({
+            "cheapest": "Lakewood"
+        })

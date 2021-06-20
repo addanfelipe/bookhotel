@@ -18,6 +18,8 @@ from django.urls import path, include
 from bookhotel.hotel import urls as hotel
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(hotel)),
+    # path('admin/', admin.site.urls),
+    path('api/v1/', include([
+        path('', include(hotel)),
+    ]))
 ]
