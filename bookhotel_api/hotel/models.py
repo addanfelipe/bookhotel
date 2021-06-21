@@ -12,8 +12,8 @@ class HotelManager(models.Manager):
 
     def get_cheapest(self, client_type: Literal['Regular', 'Reward'], count_week: int, count_weekend: int):
         column_week, column_weekend = (
-            'rate_week_regular', 'rate_weekend_regular' if client_type == 'Regular' else
-            'rate_week_loyalty', 'rate_weekend_loyalty'
+            ('rate_week_regular', 'rate_weekend_regular') if client_type == 'Regular' else
+            ('rate_week_loyalty', 'rate_weekend_loyalty')
         )
 
         result = self.annotate(

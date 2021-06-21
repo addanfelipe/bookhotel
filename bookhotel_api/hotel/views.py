@@ -1,3 +1,4 @@
+from hotel.validators import CheapestGetValidator
 from datetime import date, datetime
 
 from rest_framework import views
@@ -39,6 +40,13 @@ class Cheapest(views.APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
+        v = CheapestGetValidator(data={
+            'input': request.query_params.get('input', None)
+        })
+
+        if not v.validate():
+            return Response(v.errors, 400)
+
         input = request.query_params['input']
         client_type, count_week, count_weekend = extract_query(input)
 
