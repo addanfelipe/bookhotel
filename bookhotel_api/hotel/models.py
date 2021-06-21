@@ -23,7 +23,7 @@ FROM
 GROUP BY
         hotel_hotel.id
 ORDER BY
-        SUM(hotel_hotel.{column_week}) * {count_week} + SUM(hotel_hotel.{column_weekend}) * {count_weekend},
+        hotel_hotel.{column_week} * {count_week} + hotel_hotel.{column_weekend} * {count_weekend},
         hotel_hotel.excellence_rating DESC
 LIMIT 1
 '''
