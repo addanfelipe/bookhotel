@@ -12,8 +12,8 @@ class CheapestTest(TestCase):
         response = c.get('/api/v1/cheapest/', {
             'input': input
         })
-        self.assertEqual(response.status_code, 200)
 
+        self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertIn('cheapest', data.keys())
         self.assertEqual(data['cheapest'], result)

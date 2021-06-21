@@ -1,4 +1,4 @@
-from typing import Literal
+from hotel.types import ClientType
 
 from django.db import models
 from django.db.models import F
@@ -10,7 +10,7 @@ class HotelManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset()
 
-    def get_cheapest(self, client_type: Literal['Regular', 'Reward'], count_week: int, count_weekend: int):
+    def get_cheapest(self, client_type: ClientType, count_week: int, count_weekend: int):
         column_week, column_weekend = (
             ('rate_week_regular', 'rate_weekend_regular') if client_type == 'Regular' else
             ('rate_week_loyalty', 'rate_weekend_loyalty')
