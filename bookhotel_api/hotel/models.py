@@ -17,7 +17,10 @@ class HotelManager(models.Manager):
         )
 
         result = self.annotate(
-            total=F(column_week) * count_week + F(column_weekend) * count_weekend
+            total=(
+                F(column_week) * count_week
+                + F(column_weekend) * count_weekend
+            )
         ).order_by(
             'total',
             '-excellence_rating'
