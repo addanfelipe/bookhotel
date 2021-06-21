@@ -2,7 +2,6 @@ from typing import Literal
 
 from django.db import models
 from django.db.models import F
-from django.db.models.expressions import Value
 
 # Create your models here.
 
@@ -12,10 +11,10 @@ class HotelManager(models.Manager):
         return super().get_queryset()
 
     def get_cheapest(self, client_type: Literal['Regular', 'Reward'], count_week: int, count_weekend: int):
-        if client_type == 'Regular':
-            column_week, column_weekend = 'rate_week_regular', 'rate_weekend_regular'
-        else:
-            column_week, column_weekend = 'rate_week_loyalty', 'rate_weekend_loyalty'
+        column_week, column_weekend = (
+            'rate_week_regular', 'rate_weekend_regular' if client_type == 'Regular' else
+            'rate_week_loyalty', 'rate_weekend_loyalty'
+        )
 
         result = self.annotate(
             total=F(column_week) * count_week + F(column_weekend) * count_weekend

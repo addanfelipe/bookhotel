@@ -42,7 +42,9 @@ class Cheapest(views.APIView):
         input = request.query_params['input']
         client_type, count_week, count_weekend = extract_query(input)
 
-        hotel = Hotel.objects.get_cheapest(client_type, count_week, count_weekend)
+        hotel = Hotel.objects.get_cheapest(
+            client_type, count_week, count_weekend
+        )
 
         return Response({
             "cheapest": hotel.name
