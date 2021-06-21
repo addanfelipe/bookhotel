@@ -44,6 +44,7 @@ class Cheapest(views.APIView):
             'input': request.query_params.get('input', None)
         })
 
+
         if not v.validate():
             return Response(v.errors, 400)
 
