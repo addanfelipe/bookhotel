@@ -1,5 +1,8 @@
 from typing import Literal
+
 from django.db import models
+from django.db.models import F
+from django.db.models.expressions import Value
 
 # Create your models here.
 
@@ -14,21 +17,14 @@ class HotelManager(models.Manager):
         else:
             column_week, column_weekend = 'rate_week_loyalty', 'rate_weekend_loyalty'
 
-        sql = f'''
-SELECT
-        hotel_hotel.id,
-        hotel_hotel.name
-FROM
-        hotel_hotel
-GROUP BY
-        hotel_hotel.id
-ORDER BY
-        hotel_hotel.{column_week} * {count_week} + hotel_hotel.{column_weekend} * {count_weekend},
-        hotel_hotel.excellence_rating DESC
-LIMIT 1
-'''
-        result = self.raw(sql)
-        return result[0]
+        result = self.annotate(
+            total=F(column_week) * count_week + F(column_weekend) * count_weekend
+        ).order_by(
+            'total',
+            '-excellence_rating'
+        ).first()
+
+        return result
 
 
 class Hotel(models.Model):
