@@ -1,3 +1,4 @@
+from hotel.models import Hotel
 from datetime import date, datetime
 
 from rest_framework import views
@@ -31,18 +32,27 @@ class Cheapest(views.APIView):
 
         dates = [str_to_date(_date_str) for _date_str in dates_str]
         [count_week, count_weekend] = count_week_type(dates)
+        
+        if client_type == 'Regular':
+            column_week, column_weekend = ('rate_week_regular', 'rate_weekend_regular')
+        else:
+            column_week, column_weekend = ('rate_week_loyalty', 'rate_weekend_loyalty')
 
-        print(count_week, count_weekend)
-
-        # datetime_object = datetime.strptime('17Mar2009', '%d%b%Y').date()
-
-        # print(datetime_object)
-
-        # print(date(2009, 3, 16).weekday())
-
-        # print(client_type)
-        # print(dates)
+        sql = f'''
+SELECT
+        hotel_hotel.id,
+        hotel_hotel.name
+FROM
+        hotel_hotel
+GROUP BY
+        hotel_hotel.id
+ORDER BY
+        SUM(hotel_hotel.{column_week}) * {count_week} + SUM(hotel_hotel.{column_weekend}) * {count_weekend},
+        hotel_hotel.excellence_rating DESC
+LIMIT 1
+'''
+        result = Hotel.objects.raw(sql)
 
         return Response({
-            "cheapest": "Lakewood"
+            "cheapest": result[0].name
         })
