@@ -1,0 +1,15 @@
+GET http://localhost:8000/api/v1/cheapest/
+  ?input=Regular: 16Mar2009(mon), 17Mar2009(tues), 18Mar2009(wed)
+
+###
+GET http://localhost:8000/api/v1/cheapest/
+  ?input=Regular: 20Mar2009(fri), 21Mar2009(sat), 22Mar2009(sun)
+
+###
+GET http://localhost:8000/api/v1/cheapest/
+  ?input=Reward: 26Mar2009(thur), 27Mar2009(fri), 28Mar2009(sat)
+
+###
+# assert 400
+GET http://localhost:8000/api/v1/cheapest/
+  ?input=DEFAULT: 26Mar2009(thur), 27Mar2009(fri), 28Mar2009(sat)
