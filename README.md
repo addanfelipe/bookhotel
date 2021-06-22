@@ -1,5 +1,17 @@
 # bookhotel
 
+Simples exemplo de uma API utilizando Python 3.8 com o framework Django/Django Rest Framework
+
+### :rocket: Used
+
+``Python Strings and Dates``
+``Python Typing``
+``Django``
+``Django Rest Framework``
+``Validators``
+``ORM``
+``Unit Tests``
+
 
 ### :rocket: Run
 
